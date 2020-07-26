@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zc.dao.CustomersDao">
+
+    <resultMap type="com.zc.entity.Customers" id="CustomersMap">
+        <result property="customernumber" column="customerNumber" jdbcType="INTEGER"/>
+        <result property="customername" column="customerName" jdbcType="VARCHAR"/>
+        <result property="contactlastname" column="contactLastName" jdbcType="VARCHAR"/>
+        <result property="contactfirstname" column="contactFirstName" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="addressline1" column="addressLine1" jdbcType="VARCHAR"/>
+        <result property="addressline2" column="addressLine2" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="VARCHAR"/>
+        <result property="postalcode" column="postalCode" jdbcType="VARCHAR"/>
+        <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="salesrepemployeenumber" column="salesRepEmployeeNumber" jdbcType="INTEGER"/>
+        <result property="creditlimit" column="creditLimit" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CustomersMap">
+        SELECT customerNumber,
+               customerName,
+               contactLastName,
+               contactFirstName,
+               phone,
+               addressLine1,
+               addressLine2,
+               city,
+               state,
+               postalCode,
+               country,
+               salesRepEmployeeNumber,
+               creditLimit
+        FROM yiibaidb.customers
+        WHERE customerNumber = #{customernumber}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CustomersMap">
+        SELECT customerNumber,
+               customerName,
+               contactLastName,
+               contactFirstName,
+               phone,
+               addressLine1,
+               addressLine2,
+               city,
+               state,
+               postalCode,
+               country,
+               salesRepEmployeeNumber,
+               creditLimit
+        FROM yiibaidb.customers
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CustomersMap">
+        select
+        customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state,
+        postalCode, country, salesRepEmployeeNumber, creditLimit
+        from yiibaidb.customers
+        <where>
+            <if test="customernumber != null">
+                and customerNumber = #{customernumber}
+            </if>
+            <if test="customername != null and customername != ''">
+                and customerName = #{customername}
+            </if>
+            <if test="contactlastname != null and contactlastname != ''">
+                and contactLastName = #{contactlastname}
+            </if>
+            <if test="contactfirstname != null and contactfirstname != ''">
+                and contactFirstName = #{contactfirstname}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="addressline1 != null and addressline1 != ''">
+                and addressLine1 = #{addressline1}
+            </if>
+            <if test="addressline2 != null and addressline2 != ''">
+                and addressLine2 = #{addressline2}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state}
+            </if>
+            <if test="postalcode != null and postalcode != ''">
+                and postalCode = #{postalcode}
+            </if>
+            <if test="country != null and country != ''">
+                and country = #{country}
+            </if>
+            <if test="salesrepemployeenumber != null">
+                and salesRepEmployeeNumber = #{salesrepemployeenumber}
+            </if>
+            <if test="creditlimit != null">
+                and creditLimit = #{creditlimit}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="customernumber" useGeneratedKeys="true">
+        INSERT INTO yiibaidb.customers(customerName, contactLastName, contactFirstName, phone, addressLine1,
+                                       addressLine2, city, state, postalCode, country, salesRepEmployeeNumber,
+                                       creditLimit)
+        VALUES (#{customername}, #{contactlastname}, #{contactfirstname}, #{phone}, #{addressline1}, #{addressline2},
+                #{city}, #{state}, #{postalcode}, #{country}, #{salesrepemployeenumber}, #{creditlimit})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update yiibaidb.customers
+        <set>
+            <if test="customername != null and customername != ''">
+                customerName = #{customername},
+            </if>
+            <if test="contactlastname != null and contactlastname != ''">
+                contactLastName = #{contactlastname},
+            </if>
+            <if test="contactfirstname != null and contactfirstname != ''">
+                contactFirstName = #{contactfirstname},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="addressline1 != null and addressline1 != ''">
+                addressLine1 = #{addressline1},
+            </if>
+            <if test="addressline2 != null and addressline2 != ''">
+                addressLine2 = #{addressline2},
+            </if>
+            <if test="city != null and city != ''">
+                city = #{city},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+            <if test="postalcode != null and postalcode != ''">
+                postalCode = #{postalcode},
+            </if>
+            <if test="country != null and country != ''">
+                country = #{country},
+            </if>
+            <if test="salesrepemployeenumber != null">
+                salesRepEmployeeNumber = #{salesrepemployeenumber},
+            </if>
+            <if test="creditlimit != null">
+                creditLimit = #{creditlimit},
+            </if>
+        </set>
+        where customerNumber = #{customernumber}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        DELETE
+        FROM yiibaidb.customers
+        WHERE customerNumber = #{customernumber}
+    </delete>
+
+</mapper>
