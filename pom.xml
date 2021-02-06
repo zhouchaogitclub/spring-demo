@@ -10,6 +10,7 @@
     <modules>
         <module>redis-demo</module>
         <module>mybatis-demo</module>
+        <module>rabbitmq-demo</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -42,10 +43,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
         </dependency>
     </dependencies>
 </project>
